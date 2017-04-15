@@ -1,0 +1,27 @@
+{% extends "frontend/base.html" %}
+
+{% block content %}
+	<div class="container" style="overflow-y:scroll;margin-top:100px;">
+		<div class="row">
+			<a href="{% url 'prepare' %}">New Query</a><br>
+			<table style="width:100%" id="requestsTable">
+				<tr>
+					<th>Created By</th>
+					<th>Database</th>
+					<th>Query</th>
+					<th>Timestamp</th>
+					<th></th>
+				</tr>
+				{% for query in queries %}
+				<tr>
+					<td>{{ query.created_by }}</td>
+					<td>{{ query.database }}</td>
+					<td>{{ query.query_string }}</td>
+					<td>{{ query.timestamp }}</td>
+					<td><a href="{% url 'query_id' query.id %}" class="btn">View</a></td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock content %}

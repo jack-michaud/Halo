@@ -1,0 +1,33 @@
+{% extends "frontend/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			{% if message %}
+				<div class="panel panel-warning">
+					<div class="panel-heading">Error</div>
+					<div class="panel-body">{{ message }}</div>
+				</div>
+			{% endif %}
+			<form action="{{ request.path }}" method="post" role="form">
+				{% csrf_token %}
+				{{ form.non_field_errors }}
+					<div class="fieldWrapper form-group">
+					    {{ form.username.errors }}
+					    <label for="{{ form.username.id_username }}">Username</label>
+					    {{ form.username }}
+					</div>
+					<div class="fieldWrapper form-group">
+					    {{ form.password.errors }}
+					    <label for="{{ form.password.id_password }}">Password</label>
+					    {{ form.password }}
+					</div>
+				<input type="submit" value="Log In" class="btn btn-primary" id="loginsubmit">
+				<input type="hidden" value="{{ next }}" name="next">
+			</form>
+			<a href="{%url 'create_account'%}" class="">Create Account</a>
+		</div>
+	</div>
+</div>
+{% endblock content %}

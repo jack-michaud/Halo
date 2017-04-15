@@ -1,0 +1,107 @@
+{% extends "frontend/base.html" %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+<style>
+</style>
+<script>
+$( document ).ready(function(){
+  var data = {
+    "y": {
+      "name": "{{ y }}",
+      "data": [{% for datum in data %}"{{ datum.y }}",{% endfor %}],
+    },
+    "x": {
+      "name": "{{ x }}",
+      "data": [{% for datum in data %}"{{ datum.x }}",{% endfor %}],
+    }
+  };
+  var ctx = document.getElementById("myChart");
+  var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.x.data,
+      datasets: [
+        {
+          label: "{{ y }}",
+          data: data.y.data,
+          backgroundColor: '#5790c1',
+        }
+      ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+  });
+  // var w = 500;
+  // var h = 100;
+  // var bar_padding = 1;
+  // var svg = d3.select("p")
+  //             .append("svg")
+  //             .attr("width", w)
+  //             .attr("height", h);
+  //
+  // svg.selectAll("circle")
+  //    .data(data.y.data)
+  //    .enter()
+  //    .append("rect")
+  //    .attr("x", function(d, i){
+  //      return i * (w/data.y.data.length);
+  //    })
+  //    .attr("y", function(d) {
+  //      return h - (d*4) - 25;
+  //    })
+  //    .attr("width", function(d, i){
+  //      return w / data.y.data.length - bar_padding;
+  //    })
+  //    .attr("height", function(d){
+  //      return d * 4;
+  //    });
+  // svg.selectAll("text")
+  //    .data(data.y.data)
+  //    .enter()
+  //    .append("text")
+  //    .text(function(d){return d})
+  //    .attr("x", function(d, i){
+  //      return i * (w / data.y.data.length);
+  //    })
+  //    .attr("y", function(d){
+  //      return h - (d*4) - 5 -25;
+  //    });
+  // svg.selectAll("text")
+  //    .data(data.x.data)
+  //    .enter()
+  //    .append("text")
+  //    .text(function(d){return d})
+  //    .attr("x", function(d, i){
+  //      return i * (w / data.x.data.length);
+  //    })
+  //    .attr("y", function(d){
+  //      return h - 10;
+  //    });
+})
+
+
+</script>
+<div class="container" style="">
+<h1>X: {{ x }}</h1>
+{% for datum in data %}
+  {{ datum.x }}
+{% endfor %}
+<br>
+<h1>Y: {{ y }}</h1>
+{% for datum in data %}
+  {{ datum.y }}
+{% endfor %}
+<br>
+
+<canvas id="myChart" width="400" height="200"></canvas>
+
+</div>
+{% endblock content %}
