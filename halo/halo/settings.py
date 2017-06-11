@@ -84,7 +84,6 @@ if ENVIRONMENT == 'prod':
 else:
     DATABASE_SETTINGS = {
         'DATABASE_URL': 'postgres://halodev:password@localhost:5432/halo',
-        'BROKER_URL': 'amqp://harrow:pinkPanther1@localhost:5672/dev_vhost'
     }
 DATABASES = {
     'default': {

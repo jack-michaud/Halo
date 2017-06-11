@@ -11,6 +11,15 @@ from models import *
 
 import psycopg2
 
+
+
+# Get connection from database entry util
+def get_connection(database):
+	connect_string = "host={} port={} dbname={} user={} password={}".format(database.host_and_port.split(':')[0], database.host_and_port.split(':')[1], database.name, database.user, database.password)
+	conn = psycopg2.connect(connect_string)
+	return conn
+
+
 # Create your views here.
 def index(request):
 	return render(request, 'frontend/index.html', {})
@@ -110,8 +119,7 @@ def query_id(request, num):
 	query = Query.objects.get(id=num)
 	database = query.database
 
-	connect_string = "dbname={} user={} password={}".format(database.name, database.user, database.password)
-	conn = psycopg2.connect(connect_string)
+	conn = get_connection(database)
 
 	cur = conn.cursor()
 
@@ -174,8 +182,7 @@ def graph_id(request, num):
 	query = graph.query
 	database = query.database
 
-	connect_string = "dbname={} user={} password={}".format(database.name, database.user, database.password)
-	conn = psycopg2.connect(connect_string)
+	conn = get_connection(database)
 
 	cur = conn.cursor()
 
